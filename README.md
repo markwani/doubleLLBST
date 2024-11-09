@@ -1,1 +1,1 @@
-# miniStringApp
+This project provides a set of string manipulation utilities written in Java. It includes functions for checking palindromes both iteratively and recursively, verifying anagrams, adding substrings, counting occurrences, reversing sentence word order, and calculating string length. The program runs continuously until the user chooses to quit, allowing interaction through a menu of options. This README explains the functionality and approach used for each component of the project.
