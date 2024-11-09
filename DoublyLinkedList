@@ -1,0 +1,98 @@
+/*
+ * @author Mark Wani
+ * This class is a Doubly Linked List of a Generic Type T and
+ */
+public class DoublyLinkedList<T> {
+ // An inner class for my nodes which are of generic types
+ class Node<T> {
+ private T point;
+ private Node<T> next;
+ private Node<T> prev;
+ public Node(T point) {
+ this.point = point;
+ }
+ }
+ /**
+ * A private instance field for the head of my linked list
+ */
+ private Node<T> head = null;
+ /**
+ * @param point that is a of a generic type T
+ * This adds a generic data type to my doubly linked list
+ */
+ public void add(T point) {
+ Node<T> newNode = new Node<>(point);
+ if (head == null) {
+ head = newNode;
+ } else {
+ Node<T> current = head;
+ while (current.next != null) {
+ current = current.next;
+ }
+ current.next = newNode;
+ newNode.prev = current;
+ }
+ }
+ /**
+ * @param point that is of a generic type T
+ * This method is the recursive method for FindAndReplace
+ */
+ public void findAndReplace(T point) {
+ findAndReplaceRecursive(head, point);
+ }
+
+ /**
+ * @param current the current node inside of the list, which will ultimately be
+the head of the doubly linked list
+ * @param point a generic data type T
+ * This is the helper method for the recursive method of Find and Replace
+ */
+ private void findAndReplaceRecursive(Node<T> current, T point) {
+ if (current == null) {
+ return;
+ }
+
+ if (current.point.equals(point) && current.next != null) {
+ Node<T> nextNode = current.next;
+ if (current.prev != null) {
+ current.prev.next = nextNode;
+ }
+ nextNode.prev = current.prev;
+ current.next = nextNode.next;
+ if (nextNode.next != null) {
+ nextNode.next.prev = current;
+ }
+ nextNode.next = current;
+ current.prev = nextNode;
+ if (head == current) {
+ head = nextNode;
+ }
+ }
+
+ findAndReplaceRecursive(current.next, point);
+ }
+
+ @Override
+ public String toString() {
+ StringBuilder sb = new StringBuilder();
+ Node<T> current = head;
+ while (current != null) {
+ sb.append(current.point).append(" ");
+ current = current.next;
+ }
+ return sb.toString();
+ }
+ /**
+ * @param args
+ * Main method which shows the implementation of the Doubly Linked List
+ */
+ public static void main(String[] args){
+ DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+ list.add(90); list.add(100); list.add(899); list.add(990); list.add(7648);
+list.add(4);
+ System.out.println(list);
+ list.findAndReplace(990);
+ list.findAndReplace(100);
+ System.out.println(list);
+ }
+}
