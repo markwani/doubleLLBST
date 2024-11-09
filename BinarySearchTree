@@ -1,0 +1,96 @@
+/*
+ * @author Mark Wani
+ * This is a Binary Tree and it's also able to perform a binary search
+ */
+public class BinarySearchTree {
+
+ // An instance field for the root of the BST
+ Node root;
+ // An instance field for the counter which is used in my kthBiggest Method
+ int count = 0;
+ // An inner class for my nodes
+ class Node{
+ int key;
+ Node right;
+ Node left;
+ public Node(int key){
+ this.key = key;
+ }
+ }
+ /**
+ * This method inserts a new value into the BST
+ * @param root the Node root
+ * @param key the key value of which will be entered
+ *
+ */
+ public void insert(Node root, int key){
+ if(root == null){
+ root = new Node(key);
+ } else if(root.key > key){
+ if(root.left == null){
+ root.left = new Node(key);
+ } else {
+ insert(root.left, key);}
+ }else {
+ if(root.right == null){
+ root.right = new Node(key);
+ } else{insert(root.right, key);}
+ }
+ }
+
+ /**
+ * This traverses the BST in the preorder manner
+ * @param root The node root
+ */
+ public void preorderRec(Node root){
+ if(root == null)
+ ;
+ System.out.println(root.key);
+ preorderRec(root.left);
+ preorderRec(root.right);
+ }
+
+ /**
+ * This adds all the values in the BST and returns it as an integer
+ * @param root The node root
+ * @return an integer which is the sum off all the values in the BST
+ */
+ public int sum(Node root){
+ if(root == null){
+ return -1;
+ }
+ return root.key + sum(root.left) + sum(root.right);
+ }
+ /**
+ * This method finds the ktn Biggest term and returns which node it belongs to
+in the BST
+ * @param root The node root
+ * @param k The integer value K
+ * @return The Kth Biggest Node
+ */
+ public Node ktnBiggest(Node root, int k){
+ if(root == null || count >= k){
+ return null;
+ }
+ Node right = ktnBiggest(root.right, k);
+ if(right != null)
+ return right;
+ count++;
+ if(count == k)
+ return root;
+ return ktnBiggest(root.left, k);
+ }
+ /**
+ * This is the main method to show the implementation of the BST
+ * @param args
+ */
+ public static void main(String[] args){
+ BinarySearchTree bts = new BinarySearchTree();
+ bts.insert(bts.root, 9);
+ bts.insert(bts.root, 89);
+ bts.insert(bts.root, 8);
+ bts.insert(bts.root, 10);
+ bts.insert(bts.root, 7);
+ bts.insert(bts.root, 5);
+ }
+}
